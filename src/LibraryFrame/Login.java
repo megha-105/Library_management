@@ -34,10 +34,10 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 51));
+        jLabel2.setFont(new java.awt.Font("Monospaced", 1, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 0));
         jLabel2.setText("Librarian Login");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 190, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 280, 30));
 
         usernameTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,29 +47,31 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(usernameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 170, -1));
         jPanel1.add(passwordTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 170, -1));
 
+        loginButton.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         loginButton.setText("Login");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 90, 40));
+        jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 90, 40));
 
+        cancelButton.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 90, 40));
+        jPanel1.add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 90, 40));
 
-        jLabel3.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jLabel3.setText("Username:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Corbel", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jLabel4.setText("Password:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 350));
 
@@ -93,7 +95,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Enter Password");
             passwordTxt.requestFocus(); 
         }
-        if(user.equals("Megha")&& pass.equals("1234")){
+        if(user.equalsIgnoreCase("Megha")&& pass.equals("1234")){
             Main m =new Main();
             this.hide();
             m.setVisible(true);
