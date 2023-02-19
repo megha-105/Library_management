@@ -31,6 +31,11 @@ public class Main extends javax.swing.JFrame {
         issueButton.setBackground(new java.awt.Color(255, 255, 153));
         issueButton.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         issueButton.setText("Issue Book");
+        issueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                issueButtonActionPerformed(evt);
+            }
+        });
 
         returnButton.setBackground(new java.awt.Color(255, 255, 153));
         returnButton.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
@@ -125,16 +130,22 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void memberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberButtonActionPerformed
-        // TODO add your handling code here:
+
         this.hide();
         new Members().setVisible(true);
     }//GEN-LAST:event_memberButtonActionPerformed
 
     private void bookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookButtonActionPerformed
-        // TODO add your handling code here:
+
         this.hide();
         new Books().setVisible(true);
     }//GEN-LAST:event_bookButtonActionPerformed
+
+    private void issueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueButtonActionPerformed
+
+        this.hide();
+        new IssueBook().setVisible(true);
+    }//GEN-LAST:event_issueButtonActionPerformed
 
     public static void main(String args[]) {
 

@@ -8,15 +8,8 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.*;
 
-/**
- *
- * @author 227001
- */
 public class Books extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Members
-     */
     DefaultTableModel model;
     int bookId, quantity;
      String bookName,author;
@@ -389,7 +382,6 @@ public class Books extends javax.swing.JFrame {
     }//GEN-LAST:event_removBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        // TODO add your handling code here:
         this.hide();
         new Main().setVisible(true);
     }//GEN-LAST:event_backBtnActionPerformed
