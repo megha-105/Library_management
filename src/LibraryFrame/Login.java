@@ -1,5 +1,6 @@
 package LibraryFrame;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -45,6 +46,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(usernameTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 170, -1));
+
+        passwordTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordTxtKeyPressed(evt);
+            }
+        });
         jPanel1.add(passwordTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 170, -1));
 
         loginButton.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
@@ -83,8 +90,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameTxtActionPerformed
 
-    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-
+    //to login 
+    private void login(){
+       
         String user=usernameTxt.getText();
         String pass=passwordTxt.getText();
         if(user.equals("")||pass.equals("")){
@@ -108,7 +116,12 @@ public class Login extends javax.swing.JFrame {
             usernameTxt.requestFocus(); 
         }
         }
-        loginButton.setSelected(false);
+        loginButton.setSelected(false); 
+    }
+    
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+
+        login();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -118,6 +131,12 @@ public class Login extends javax.swing.JFrame {
         usernameTxt.requestFocus(); 
         cancelButton.setSelected(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void passwordTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTxtKeyPressed
+       if(evt.getKeyCode()== KeyEvent.VK_ENTER){
+           login(); 
+       }
+    }//GEN-LAST:event_passwordTxtKeyPressed
 
     public static void main(String args[]) {
 
