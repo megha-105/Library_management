@@ -5,6 +5,7 @@
 package LibraryFrame;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.*;
 
 /**
@@ -13,9 +14,10 @@ import javax.swing.table.*;
  */
 public class Members extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Members
-     */
+    DefaultTableModel model;
+    int memId,contact;
+    String memName,mail;
+    
     public Members() {
         initComponents();
         showMember();
@@ -112,9 +114,19 @@ public class Members extends javax.swing.JFrame {
 
         addBtn.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         addBtn.setText("ADD");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
 
         editBtn.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         editBtn.setText("EDIT");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
 
         removeBtn.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
         removeBtn.setText("REMOVE");
@@ -229,20 +241,20 @@ public class Members extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-        //to display member details table from database
+    //to display member details table from database
     public void showMember(){
         try{
         DBconnection ob= new DBconnection();
         ResultSet rs =ob.st.executeQuery("select * from members");
         
         while(rs.next()){
-            int memId=rs.getInt("id");
-            String memName=rs.getString("name");
-            String mail=rs.getString("gmail");
-            int contact=rs.getInt("contact");
+            memId=rs.getInt("id");
+            memName=rs.getString("name");
+            mail=rs.getString("gmail");
+            contact=rs.getInt("contact");
             
             Object[] rowData={ memId,memName,mail,contact};
-            DefaultTableModel model=(DefaultTableModel) memberTable.getModel();
+            model=(DefaultTableModel) memberTable.getModel();
             model.addRow(rowData); 
         }
         }
@@ -251,9 +263,108 @@ public class Members extends javax.swing.JFrame {
         }
     }
     
+    //to clear Table
+    private void clearTable(){
+        model= (DefaultTableModel)memberTable.getModel();
+        model.setRowCount(0);
+    }
+    
+    //to add member
+    private boolean addMem(){
+        boolean isAdded =false;
+        
+        memId=Integer.parseInt(memIdTxt.getText());
+        memName = memNameTxt.getText();
+        mail= mailTxt.getText();
+        contact= Integer.parseInt(contactTxt.getText());
+        
+        try{
+            DBconnection ob= new DBconnection();
+            PreparedStatement pst=ob.con.prepareStatement("insert into members values(?,?,?,?)");
+            pst.setInt(1, memId);
+            pst.setString(2, memName);
+            pst.setString(3, mail);
+            pst.setInt(4, contact);
+            
+            int rowCnt = pst.executeUpdate();
+            if(rowCnt>0){
+                isAdded=true;
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return isAdded;
+    }
+    
+    //to edit member
+    private boolean editMem(){
+        boolean isUpdated =false;
+        
+        memId=Integer.parseInt(memIdTxt.getText());
+        memName = memNameTxt.getText();
+        mail= mailTxt.getText();
+        contact= Integer.parseInt(contactTxt.getText());
+        
+        try{
+            DBconnection ob= new DBconnection();
+            String sql="update members set  name = ?,  gmail= ?, contact = ? where id = ?";
+            PreparedStatement pst=ob.con.prepareStatement(sql);
+            
+            pst.setString(1, memName);
+            pst.setString(2, mail);
+            pst.setInt(3, contact);
+            pst.setInt(4, memId);
+            
+            int rowCnt = pst.executeUpdate();
+            if(rowCnt>0){
+                isUpdated=true;
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return isUpdated;
+    }    
+    
+    //to remove member
+    private boolean deleteMem(){
+        boolean isDeleted =false;
+        
+        memId=Integer.parseInt(memIdTxt.getText());
+        
+        try{
+            DBconnection ob= new DBconnection();
+            String sql="delete from members where id = ?";
+            PreparedStatement pst=ob.con.prepareStatement(sql);
+            
+
+            pst.setInt(1, memId);
+            
+            int rowCnt = pst.executeUpdate();
+            if(rowCnt>0){
+                isDeleted=true;
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return isDeleted;
+    }
     
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
-        // TODO add your handling code here:
+       if(deleteMem()){
+           JOptionPane.showMessageDialog(this, "Member Deleted");
+           clearTable();
+           showMember();
+       }
+       else{
+           JOptionPane.showMessageDialog(this, "Member Not Deleted");
+       }
+
     }//GEN-LAST:event_removeBtnActionPerformed
 
     private void backbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtnActionPerformed
@@ -270,6 +381,29 @@ public class Members extends javax.swing.JFrame {
         mailTxt.setText(model.getValueAt(rowNo,2).toString());
         contactTxt.setText(model.getValueAt(rowNo,3).toString());
     }//GEN-LAST:event_memberTableMouseClicked
+
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+       if(addMem()){
+           JOptionPane.showMessageDialog(this, "Member Added");
+           clearTable();
+           showMember();
+       }
+       else{
+           JOptionPane.showMessageDialog(this, "Member Add Failed");
+       }
+
+    }//GEN-LAST:event_addBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+       if(editMem()){
+           JOptionPane.showMessageDialog(this, "Member Details Edited");
+           clearTable();
+           showMember();
+       }
+       else{
+           JOptionPane.showMessageDialog(this, "Member  Details Not Edited");
+       }
+    }//GEN-LAST:event_editBtnActionPerformed
 
     /**
      * @param args the command line arguments
